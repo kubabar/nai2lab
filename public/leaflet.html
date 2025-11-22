@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Mapa</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Self-hosted Leaflet -->
+  <link rel="stylesheet" href="leaflet/leaflet.css">
+  <style>
+    html, body, #map {
+      height: 100%;
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+<div id="map"></div>
+
+<script src="leaflet/leaflet.js"></script>
+<script>
+  const AJPLat = 52.7335;
+  const AJPLon = 15.2266;
+  
+  const map = L.map('map', {
+    center: [AJPLat, AJPLon],
+    zoom: 16,
+    attributionControl: true
+  });
+  
+  map.attributionControl.setPrefix(false);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+  
+  L.Icon.Default.mergeOptions({
+    iconUrl: 'marker-icon.png',
+    iconRetinaUrl: 'marker-icon-2x.png',
+    shadowUrl: 'marker-shadow.png'
+  });
+  
+  L.marker([AJPLat, AJPLon])
+    .addTo(map)
+    .bindPopup('AJP Gorzów<br>Akademia im. Jakuba z Paradyża');
+</script>
+
+</body>
+</html>
