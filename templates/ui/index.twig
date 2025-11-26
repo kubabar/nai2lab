@@ -1,0 +1,232 @@
+{% extends "layout.twig" %}
+
+{% block stylesheets %}
+<style>
+.ui-templates-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.template-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.template-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.template-card-header {
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+    color: white;
+}
+
+.template-card-header h3 {
+    color: white;
+    margin: 0 0 0.5rem 0;
+    font-size: 1.5rem;
+}
+
+.template-card-header p {
+    margin: 0;
+    opacity: 0.9;
+    font-size: 0.9rem;
+}
+
+.template-card-body {
+    padding: 1.5rem;
+}
+
+.template-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+}
+
+.template-features li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+}
+
+.template-features li:last-child {
+    border-bottom: none;
+}
+
+.template-features li::before {
+    content: '✓';
+    color: #27ae60;
+    font-weight: bold;
+    margin-right: 0.75rem;
+    font-size: 1.2rem;
+}
+
+.template-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: #3498db;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #2980b9;
+}
+
+.btn-secondary {
+    background: #95a5a6;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #7f8c8d;
+}
+
+.intro-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.intro-section h3 {
+    color: #2c3e50;
+    margin-top: 0;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-left: 0.5rem;
+}
+
+.badge-email {
+    background: #e74c3c;
+    color: white;
+}
+
+.badge-table {
+    background: #3498db;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .ui-templates-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="intro-section">
+    <h3>Dokumenty UI - Szablony Twig</h3>
+    <p>
+        System zawiera przygotowane szablony dokumentów UI wykorzystujące silnik szablonów Twig.
+        Każdy szablon jest w pełni responsywny, gotowy do użycia i może być dostosowany do indywidualnych potrzeb.
+    </p>
+    <p style="margin-top: 1rem;">
+        Poniżej znajdziesz dostępne szablony wraz z ich funkcjonalnościami i przykładowymi danymi.
+    </p>
+</div>
+
+<div class="ui-templates-grid">
+    <!-- Szablon powiadomienia email -->
+    <div class="template-card">
+        <div class="template-card-header">
+            <h3>
+                📧 Powiadomienie Email
+                <span class="badge badge-email">Email</span>
+            </h3>
+            <p>Szablon wiadomości o wydarzeniu</p>
+        </div>
+        <div class="template-card-body">
+            <ul class="template-features">
+                <li>Nazwa wydarzenia</li>
+                <li>Data wydarzenia</li>
+                <li>Miejsce wydarzenia</li>
+                <li>Dane uczestnika (imię, nazwisko)</li>
+                <li>Responsywny design</li>
+                <li>Gotowy do wysyłki przez PHPMailer</li>
+            </ul>
+            <div class="template-actions">
+                <a href="/ui/email-notification" class="btn btn-primary" target="_blank">
+                    Podgląd
+                </a>
+                <a href="/ui/email-notification?download=1" class="btn btn-secondary">
+                    HTML
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Szablon tabeli osób -->
+    <div class="template-card">
+        <div class="template-card-header">
+            <h3>
+                👥 Tabela Pracowników
+                <span class="badge badge-table">UI</span>
+            </h3>
+            <p>Interaktywna lista osób</p>
+        </div>
+        <div class="template-card-body">
+            <ul class="template-features">
+                <li>Lp, Nazwisko, Imię</li>
+                <li>Stanowisko, E-mail</li>
+                <li>Wyszukiwarka w czasie rzeczywistym</li>
+                <li>Eksport do CSV</li>
+                <li>Funkcja drukowania</li>
+                <li>Kolorowe odznaki stanowisk</li>
+                <li>Paginacja</li>
+            </ul>
+            <div class="template-actions">
+                <a href="/ui/people-table" class="btn btn-primary">
+                    Otwórz
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="intro-section" style="margin-top: 2rem;">
+    <h3>Użycie w projekcie</h3>
+    <p><strong>Szablon email</strong> - można użyć w MailService do wysyłania sformatowanych powiadomień:</p>
+    <pre style="background: #f8f9fa; padding: 1rem; border-radius: 4px; overflow-x: auto;"><code>$view = Twig::create(__DIR__ . '/../templates');
+$html = $view->fetch('emails/notification.twig', [
+    'event_name' => 'Nazwa wydarzenia',
+    'event_date' => '2025-03-15 10:00',
+    'event_location' => 'Aula Magna',
+    'first_name' => 'Jan',
+    'last_name' => 'Kowalski'
+]);
+$mail->Body = $html;</code></pre>
+    
+    <p style="margin-top: 1rem;"><strong>Tabela osób</strong> - gotowa do użycia jako komponent do wyświetlania list pracowników, studentów itp.</p>
+</div>
+{% endblock %}

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Powiadomienie o wydarzeniu</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .email-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .email-header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .email-header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .email-body {
+            padding: 30px;
+        }
+        .greeting {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        .event-info {
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        .event-info h2 {
+            margin-top: 0;
+            color: #2c3e50;
+            font-size: 20px;
+        }
+        .info-row {
+            display: flex;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        .info-label {
+            font-weight: bold;
+            color: #34495e;
+            min-width: 120px;
+            display: flex;
+            align-items: center;
+        }
+        .info-label::before {
+            content: '●';
+            color: #3498db;
+            margin-right: 10px;
+            font-size: 12px;
+        }
+        .info-value {
+            color: #555;
+            flex: 1;
+        }
+        .event-name {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #3498db;
+        }
+        .message {
+            margin: 20px 0;
+            line-height: 1.8;
+            color: #555;
+        }
+        .email-footer {
+            background: #34495e;
+            color: white;
+            padding: 20px 30px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .email-footer p {
+            margin: 5px 0;
+        }
+        .email-footer a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .button {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        .button:hover {
+            background: #2980b9;
+        }
+        @media only screen and (max-width: 600px) {
+            .email-body {
+                padding: 20px;
+            }
+            .info-row {
+                flex-direction: column;
+            }
+            .info-label {
+                margin-bottom: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="email-header">
+            <h1>📅 Powiadomienie o wydarzeniu</h1>
+        </div>
+        
+        <div class="email-body">
+            <p class="greeting">
+                Szanowny/a <strong>{{ first_name }} {{ last_name }}</strong>,
+            </p>
+            
+            <p class="message">
+                Informujemy, że zostało zaplanowane następujące wydarzenie, w którym jesteś uczestnikiem:
+            </p>
+            
+            <div class="event-info">
+                <div class="event-name">
+                    {{ event_name }}
+                </div>
+                
+                <div class="info-row">
+                    <div class="info-label">Data wydarzenia:</div>
+                    <div class="info-value">{{ event_date }}</div>
+                </div>
+                
+                <div class="info-row">
+                    <div class="info-label">Miejsce:</div>
+                    <div class="info-value">{{ event_location }}</div>
+                </div>
+                
+                <div class="info-row">
+                    <div class="info-label">Uczestnik:</div>
+                    <div class="info-value">{{ first_name }} {{ last_name }}</div>
+                </div>
+            </div>
+            
+            <p class="message">
+                Prosimy o potwierdzenie swojej obecności oraz przygotowanie się do wydarzenia zgodnie z programem.
+            </p>
+            
+            <center>
+                <a href="#" class="button">Potwierdź obecność</a>
+            </center>
+            
+            <p class="message" style="font-size: 14px; color: #777; margin-top: 30px;">
+                W razie pytań prosimy o kontakt z biurem organizacyjnym.
+            </p>
+        </div>
+        
+        <div class="email-footer">
+            <p><strong>{{ contact.name }}</strong></p>
+            <p>{{ contact.street }}, {{ contact.postal_code }} {{ contact.city }}</p>
+            <p>Tel: {{ contact.phone }} | Email: <a href="mailto:{{ contact.email }}">{{ contact.email }}</a></p>
+            <p style="margin-top: 15px; font-size: 12px; color: #95a5a6;">
+                To jest automatyczna wiadomość. Prosimy nie odpowiadać na tego maila.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
