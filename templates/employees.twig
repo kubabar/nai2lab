@@ -1,0 +1,104 @@
+{% extends "layout.twig" %}
+
+{% block stylesheets %}
+<style>
+.employees-intro {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-left: 4px solid #e74c3c;
+    border-radius: 4px;
+}
+.employees-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+.employee-card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.employee-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+.employee-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 1rem;
+    display: block;
+    border: 4px solid #3498db;
+}
+.employee-name {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+.employee-position {
+    color: #e74c3c;
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+    text-align: center;
+}
+.employee-department {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+.employee-contact {
+    border-top: 1px solid #ecf0f1;
+    padding-top: 1rem;
+    margin-top: 1rem;
+}
+.employee-contact p {
+    margin: 0.3rem 0;
+    font-size: 0.9rem;
+}
+.employee-contact strong {
+    color: #34495e;
+}
+.employee-contact a {
+    color: #3498db;
+    text-decoration: none;
+}
+.employee-contact a:hover {
+    text-decoration: underline;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="employees-intro">
+    <p>
+        Poznaj kadrę Akademii im. Jakuba z Paradyża. Nasi wykładowcy to doświadczeni specjaliści
+        łączący wiedzę teoretyczną z praktycznym doświadczeniem zawodowym.
+    </p>
+</div>
+
+<div class="employees-grid">
+    {% for employee in employees %}
+    <div class="employee-card">
+        <img src="{{ employee.photo }}" alt="{{ employee.name }}" class="employee-photo" 
+             onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%22120%22%3E%3Crect fill=%22%233498db%22 width=%22120%22 height=%22120%22/%3E%3Ctext fill=%22white%22 x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 font-size=%2240%22%3E{{ employee.name|slice(0,1) }}%3C/text%3E%3C/svg%3E'">
+        
+        <h3 class="employee-name">{{ employee.name }}</h3>
+        <p class="employee-position">{{ employee.position }}</p>
+        <p class="employee-department">{{ employee.department }}</p>
+        
+        <div class="employee-contact">
+            <p><strong>Email:</strong> <a href="mailto:{{ employee.email }}">{{ employee.email }}</a></p>
+            <p><strong>Telefon:</strong> <a href="tel:{{ employee.phone }}">{{ employee.phone }}</a></p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

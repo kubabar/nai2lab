@@ -1,0 +1,222 @@
+{% extends "layout.twig" %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/leaflet/leaflet.css">
+<style>
+.contact-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+.contact-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.form-group {
+    margin-bottom: 1.5rem;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #2c3e50;
+}
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
+.form-group textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+.btn-submit {
+    background: #3498db;
+    color: white;
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+.btn-submit:hover {
+    background: #2980b9;
+}
+.alert {
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+.alert-success {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+.alert-error {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+.alert ul {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+#map {
+    height: 500px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.contact-info {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+.contact-info h3 {
+    margin-top: 0;
+    color: #2c3e50;
+}
+.contact-info p {
+    margin: 0.5rem 0;
+}
+@media (max-width: 768px) {
+    .contact-container {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="contact-container">
+    <div>
+        <div class="contact-info">
+            <h3>Dane kontaktowe</h3>
+            <p><strong>{{ contact.name }}</strong></p>
+            <p>{{ contact.street }}</p>
+            <p>{{ contact.postal_code }} {{ contact.city }}</p>
+            <p><strong>Tel:</strong> {{ contact.phone }}</p>
+            <p><strong>Email:</strong> {{ contact.email }}</p>
+            
+            <h4 style="margin-top: 1.5rem;">Godziny pracy sekretariatu</h4>
+            <p>{{ office_hours.monday_friday }}</p>
+            <p>{{ office_hours.saturday }}</p>
+            <p>{{ office_hours.sunday }}</p>
+        </div>
+        
+        <div class="contact-form">
+            <h3>Formularz kontaktowy</h3>
+            
+            {% if success %}
+            <div class="alert alert-success">
+                {{ success }}
+            </div>
+            {% endif %}
+            
+            {% if errors %}
+            <div class="alert alert-error">
+                <ul>
+                    {% for error in errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+            <form method="POST" action="/kontakt">
+                <div class="form-group">
+                    <label for="name">Imię i nazwisko *</label>
+                    <input type="text" id="name" name="name" value="{{ old.name|default('') }}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" value="{{ old.email|default('') }}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject">Temat *</label>
+                    <input type="text" id="subject" name="subject" value="{{ old.subject|default('') }}" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Wiadomość *</label>
+                    <textarea id="message" name="message" required>{{ old.message|default('') }}</textarea>
+                </div>
+                
+                <button type="submit" class="btn-submit">Wyślij wiadomość</button>
+            </form>
+        </div>
+    </div>
+    
+    <div>
+        <h3>Jak do nas trafić?</h3>
+        <div id="map"></div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="/leaflet/leaflet.js"></script>
+<script>
+const AJPLat = {{ location.latitude }};
+const AJPLon = {{ location.longitude }};
+
+const map = L.map('map', {
+    center: [AJPLat, AJPLon],
+    zoom: {{ location.map_zoom }},
+    attributionControl: true
+});
+
+map.attributionControl.setPrefix(false);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+L.marker([AJPLat, AJPLon])
+    .addTo(map)
+    .bindPopup('<strong>{{ contact.short_name }}</strong><br>{{ contact.name }}<br>{{ contact.street }}')
+    .openPopup();
+
+// Przewiń do komunikatu sukcesu jeśli istnieje
+{% if success %}
+document.addEventListener('DOMContentLoaded', function() {
+    const successAlert = document.querySelector('.alert-success');
+    if (successAlert) {
+        successAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        
+        // Opcjonalnie: użyj toast notification z main.js
+        if (window.AJP && window.AJP.showToast) {
+            window.AJP.showToast('{{ success }}', 'success');
+        }
+    }
+});
+{% endif %}
+
+// Przewiń do pierwszego błędu jeśli istnieją błędy
+{% if errors %}
+document.addEventListener('DOMContentLoaded', function() {
+    const errorAlert = document.querySelector('.alert-error');
+    if (errorAlert) {
+        errorAlert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+});
+{% endif %}
+</script>
+{% endblock %}
