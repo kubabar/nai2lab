@@ -5,6 +5,7 @@ use App\Controllers\GalleryController;
 use App\Controllers\EmployeesController;
 use App\Controllers\ContactController;
 use App\Controllers\UIController;
+use App\Controllers\ScheduleController;
 
 // Strona główna
 $app->get('/', [HomeController::class, 'index'])->setName('home');
@@ -23,3 +24,6 @@ $app->post('/kontakt', [ContactController::class, 'send'])->setName('contact.sen
 $app->get('/ui', [UIController::class, 'index'])->setName('ui.index');
 $app->get('/ui/email-notification', [UIController::class, 'emailNotification'])->setName('ui.email');
 $app->get('/ui/people-table', [UIController::class, 'peopleTable'])->setName('ui.people');
+
+// Plan zajęć
+$app->get('/plan-zajec', [ScheduleController::class, 'index'])->setName('schedule');

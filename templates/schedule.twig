@@ -1,0 +1,276 @@
+{% extends "layout.twig" %}
+
+{% block stylesheets %}
+<style>
+    .schedule-container {
+        margin: 2rem 0;
+    }
+
+    .schedule-header {
+        background: linear-gradient(135deg, #2c3e50, #3498db);
+        color: white;
+        padding: 1rem;
+        border-radius: 8px 8px 0 0;
+        text-align: center;
+    }
+
+    .current-time {
+        opacity: .9;
+        font-size: .9rem;
+    }
+
+    .controls {
+        background: white;
+        padding: 1rem;
+        border: 1px solid #e0e0e0;
+        border-top: none;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+    .controls label {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: .4rem;
+    }
+
+    .toggle-view-btn {
+        background: #3498db;
+        color: white;
+        border: none;
+        padding: .6rem 1.2rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+    .schedule-wrapper {
+        background: white;
+        padding: 1.5rem;
+        border: 1px solid #e0e0e0;
+        border-top: none;
+        border-radius: 0 0 8px 8px;
+        overflow-x: auto;
+    }
+
+    table.schedule-table {
+        border-collapse: collapse;
+        width: 100%;
+        min-width: 900px;
+    }
+
+    table.schedule-table th,
+    table.schedule-table td {
+        border: 1px solid #e0e0e0;
+        padding: .8rem;
+        text-align: center;
+    }
+
+    table.schedule-table th {
+        background: #34495e;
+        color: white;
+    }
+
+    td.current-timeslot {
+        background:#d4edda !important;
+    }
+
+    td.current-cell {
+        border:2px solid #28a745 !important;
+    }
+
+    td.notcurrent-cell {
+        background:none !important;
+        border:none !important;
+    }
+
+    .hour {
+        background: #f7f7f7;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .lesson {
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .lesson.empty {
+        color: #999;
+        font-style: italic;
+    }
+
+    td.special {
+        background: #fff3cd;
+        font-weight: 600;
+    }
+
+    .today-col {
+        background: #df3a3a !important;
+    }
+
+    .subject {
+        font-weight: 600;
+        color: #2c3e50;
+    }
+
+    .class-badge {
+        background: #3498db;
+        color: white;
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: .8rem;
+        width: fit-content;
+    }
+
+    .room {
+        font-size: .75rem;
+        color: #666;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="schedule-container">
+    <div class="schedule-header">
+        <h2>Plan zajęć</h2>
+        <div class="current-time">
+            {{ current_day_name }}, {{ "now"|date("d.m.Y H:i") }}
+            {% if current_lesson >= 0 %}
+            — Aktualnie Lekcja {{ current_lesson + 1 }}
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="toggle-view-btn" id="toggleView">↕️ Transponuj widok</button>
+    </div>
+
+    <div class="schedule-wrapper">
+        <table class="schedule-table" id="scheduleTable">
+            <thead>
+                <tr>
+                    <th class="corner">Godz.</th>
+
+                    {% for day in days %}
+                    <th class="{% if loop.index0 == current_day %}today-col{% endif %}">
+                        {{ day.short }}
+                    </th>
+                    {% endfor %}
+
+                    <th class="corner">Godz.</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for hour in hours %}
+                <tr>
+                    <!-- Lewa kolumna godzin -->
+                    <td class="hour
+                    {% if hour.nr-1 == current_lesson %} current-timeslot {% endif %}
+                    ">
+                        <span class="lesson-nr">{{ hour.nr }}.</span>
+                        <span class="time">{{ hour.start }}–{{ hour.end }}</span>
+                    </td>
+
+                    {% for day in days %}
+                    {% set lesson = schedule[day.id][loop.parent.loop.index0] %}
+                    <td class="
+                        {% if loop.parent.loop.index0 == current_lesson and loop.index0 == current_day %}
+                            current-cell
+                        {% endif %}
+
+                        {% if loop.parent.loop.index0 == current_lesson %}
+                            current-timeslot
+                        {% endif %}
+
+
+
+                        {% if lesson.special|default(false) %}special{% endif %}
+                    ">
+                        <div class="lesson
+                            {% if not lesson %}empty{% endif %}
+                            
+                        ">
+
+                            {% if lesson %}
+                            {% if lesson.special %}
+                            {{ lesson.subject }}
+                            {% else %}
+                            <div class="subject">{{ lesson.subject }}</div>
+                            {% if lesson.class %}
+                            <div class="class-badge">{{ lesson.class }}</div>
+                            {% endif %}
+                            {% if lesson.room %}
+                            <div class="room">{{ lesson.room }}</div>
+                            {% endif %}
+                            {% endif %}
+                            {% else %}
+                            <i>wolne</i>
+                            {% endif %}
+                        </div>
+                    </td>
+                    {% endfor %}
+
+                    <!-- Prawa kolumna godzin -->
+                    <td class="hour {% if hour.nr-1 == current_lesson %} current-timeslot {% endif %}">
+                        <span class="lesson-nr">{{ hour.nr }}.</span>
+                        <span class="time">{{ hour.start }}–{{ hour.end }}</span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    let transposed = false;
+    const table = document.getElementById("scheduleTable");
+
+    // 🔄 TRANSPONOWANIE TABELI
+    function transposeTable() {
+        const rows = [...table.rows];
+        const newRows = [];
+
+        for (let i = 0; i < rows[0].cells.length; i++) {
+            newRows[i] = [];
+        }
+
+        rows.forEach((row, r) => {
+            [...row.cells].forEach((cell, c) => {
+                newRows[c][r] = cell.cloneNode(true);
+            });
+        });
+
+        table.innerHTML = "";
+        newRows.forEach(cells => {
+            const tr = document.createElement("tr");
+            cells.forEach(cell => tr.appendChild(cell));
+            table.appendChild(tr);
+        });
+
+        restoreState();
+    }
+
+    // 🔘 Przełącznik widoku
+    document.getElementById("toggleView").addEventListener("click", () => {
+        transposeTable();
+        transposed = !transposed;
+        document.getElementById("toggleView").innerText =
+            transposed ? "↔️ Widok standardowy" : "↕️ Widok transponowany";
+    });
+
+    // inicjalizacja
+    restoreState();
+</script>
+{% endblock %}
