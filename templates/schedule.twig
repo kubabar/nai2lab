@@ -76,22 +76,34 @@
     }
 
     td.current-timeslot {
-        background:#d4edda !important;
+        background: #d4edda !important;
     }
 
     td.current-cell {
-        border:2px solid #28a745 !important;
+        border: 2px solid #28a745 !important;
     }
 
     td.notcurrent-cell {
-        background:none !important;
-        border:none !important;
+        background: none !important;
+        border: none !important;
     }
 
     .hour {
         background: #f7f7f7;
         font-weight: 600;
         white-space: nowrap;
+    }
+
+    .lesson-nr {
+        display: inline;
+    }
+
+    .time {
+        display: inline;
+    }
+
+    .hidden {
+        display: none;
     }
 
     .lesson {
@@ -151,13 +163,23 @@
 
     <div class="controls">
         <button class="toggle-view-btn" id="toggleView">↕️ Transponuj widok</button>
+
+        <label>
+            <input type="checkbox" id="showLessonNr" checked>
+            Pokaż nr lekcji
+        </label>
+
+        <label>
+            <input type="checkbox" id="showTime" checked>
+            Pokaż godziny
+        </label>
     </div>
 
     <div class="schedule-wrapper">
         <table class="schedule-table" id="scheduleTable">
             <thead>
                 <tr>
-                    <th class="corner">Godz.</th>
+                    <th class="corner hour-column">Godz.</th>
 
                     {% for day in days %}
                     <th class="{% if loop.index0 == current_day %}today-col{% endif %}">
@@ -165,7 +187,7 @@
                     </th>
                     {% endfor %}
 
-                    <th class="corner">Godz.</th>
+                    <th class="corner hour-column">Godz.</th>
                 </tr>
             </thead>
 
@@ -173,11 +195,13 @@
                 {% for hour in hours %}
                 <tr>
                     <!-- Lewa kolumna godzin -->
-                    <td class="hour
+                    <td class="hour hour-column
                     {% if hour.nr-1 == current_lesson %} current-timeslot {% endif %}
                     ">
-                        <span class="lesson-nr">{{ hour.nr }}.</span>
-                        <span class="time">{{ hour.start }}–{{ hour.end }}</span>
+                        <span class="hour-content">
+                            <span class="lesson-nr">{{ hour.nr }}.</span>
+                            <span class="time">{{ hour.start }}–{{ hour.end }}</span>
+                        </span>
                     </td>
 
                     {% for day in days %}
@@ -191,13 +215,10 @@
                             current-timeslot
                         {% endif %}
 
-
-
                         {% if lesson.special|default(false) %}special{% endif %}
                     ">
                         <div class="lesson
                             {% if not lesson %}empty{% endif %}
-                            
                         ">
 
                             {% if lesson %}
@@ -220,9 +241,11 @@
                     {% endfor %}
 
                     <!-- Prawa kolumna godzin -->
-                    <td class="hour {% if hour.nr-1 == current_lesson %} current-timeslot {% endif %}">
-                        <span class="lesson-nr">{{ hour.nr }}.</span>
-                        <span class="time">{{ hour.start }}–{{ hour.end }}</span>
+                    <td class="hour hour-column {% if hour.nr-1 == current_lesson %} current-timeslot {% endif %}">
+                        <span class="hour-content">
+                            <span class="lesson-nr">{{ hour.nr }}.</span>
+                            <span class="time">{{ hour.start }}–{{ hour.end }}</span>
+                        </span>
                     </td>
                 </tr>
                 {% endfor %}
@@ -236,6 +259,43 @@
 <script>
     let transposed = false;
     const table = document.getElementById("scheduleTable");
+
+    // Konfiguracja wyświetlania
+    let showLessonNr = true;
+    let showTime = true;
+
+    // 🎯 Aktualizacja widoczności elementów
+    function updateVisibility() {
+        // Kontrola numerów lekcji
+        const lessonNrElements = table.querySelectorAll('.lesson-nr');
+        lessonNrElements.forEach(el => {
+            if (showLessonNr) {
+                el.classList.remove('hidden');
+            } else {
+                el.classList.add('hidden');
+            }
+        });
+
+        // Kontrola godzin
+        const timeElements = table.querySelectorAll('.time');
+        timeElements.forEach(el => {
+            if (showTime) {
+                el.classList.remove('hidden');
+            } else {
+                el.classList.add('hidden');
+            }
+        });
+
+        // Ukryj kolumny godzin (łącznie z nagłówkami) jeśli oba są wyłączone
+        const hourColumns = table.querySelectorAll('.hour-column');
+        hourColumns.forEach(col => {
+            if (!showLessonNr && !showTime) {
+                col.classList.add('hidden');
+            } else {
+                col.classList.remove('hidden');
+            }
+        });
+    }
 
     // 🔄 TRANSPONOWANIE TABELI
     function transposeTable() {
@@ -259,7 +319,7 @@
             table.appendChild(tr);
         });
 
-        restoreState();
+        updateVisibility();
     }
 
     // 🔘 Przełącznik widoku
@@ -267,10 +327,22 @@
         transposeTable();
         transposed = !transposed;
         document.getElementById("toggleView").innerText =
-            transposed ? "↔️ Widok standardowy" : "↕️ Widok transponowany";
+            transposed ? "↔️ Widok standardowy" : "↕️ Transponuj widok";
     });
 
-    // inicjalizacja
-    restoreState();
+    // 📋 Checkbox dla numeru lekcji
+    document.getElementById("showLessonNr").addEventListener("change", (e) => {
+        showLessonNr = e.target.checked;
+        updateVisibility();
+    });
+
+    // ⏰ Checkbox dla godzin
+    document.getElementById("showTime").addEventListener("change", (e) => {
+        showTime = e.target.checked;
+        updateVisibility();
+    });
+
+    // Inicjalizacja
+    updateVisibility();
 </script>
 {% endblock %}
