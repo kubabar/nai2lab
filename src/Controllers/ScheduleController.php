@@ -117,13 +117,13 @@ class ScheduleController
     private function getCurrentLessonInfo(array $hours, array $days): array
     {
         $now = new \DateTime();
-        $dayOfWeek = (int)$now->format('N'); // 1=pon, 5=pią
+        $dayOfWeek = (int)$now->format('N'); // 1=pon, 7=nie
         $currentTime = $now->format('H:i');
 
-        // Mapuj dzień tygodnia na index (0=pon)
-        $currentDayIndex = $dayOfWeek - 1;
-        if ($currentDayIndex < 0 || $currentDayIndex > 4) {
-            $currentDayIndex = -1; // Weekend
+        // Mapuj dzień tygodnia na index (0=pon, 4=pią, -1=weekend)
+        $currentDayIndex = $dayOfWeek - 1; // 0-6
+        if ($currentDayIndex > 4) {
+            $currentDayIndex = -1; // Weekend (sobota=5, niedziela=6 → -1)
         }
 
         // Znajdź aktualną lekcję
@@ -139,7 +139,7 @@ class ScheduleController
             'day' => $currentDayIndex,
             'lesson' => $currentLessonIndex,
             'time' => $currentTime,
-            'day_name' => $currentDayIndex >= 0 && $currentDayIndex < 5
+            'day_name' => $currentDayIndex >= 0
                 ? $days[$currentDayIndex]['full']
                 : 'Weekend'
         ];
