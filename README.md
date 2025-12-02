@@ -1,42 +1,73 @@
-# Slim Framework 4 Skeleton Application
+# System Zarządzania Treścią - Slim Framework + Twig
 
-[![Coverage Status](https://coveralls.io/repos/github/slimphp/Slim-Skeleton/badge.svg?branch=master)](https://coveralls.io/github/slimphp/Slim-Skeleton?branch=master)
+Aplikacja webowa zbudowana w architekturze MVC z wykorzystaniem Slim Framework 4 i systemu szablonów Twig.
 
-Use this skeleton application to quickly setup and start working on a new Slim Framework 4 application. This application uses the latest Slim 4 with Slim PSR-7 implementation and PHP-DI container implementation. It also uses the Monolog logger.
+## Technologie
 
-This skeleton application was built for Composer. This makes setting up a new Slim Framework application quick and easy.
+- **PHP 8.0+**
+- **Slim Framework 4** - routing, middleware
+- **Twig** - system szablonów
+- **PHPMailer** - obsługa emaili
+- **JavaScript** - interaktywność
+- **Swiper.js** - slider
+- **Lightbox2** - galeria zdjęć
+- **Leaflet** - mapy interaktywne
 
-## Install the Application
+## Funkcjonalności
 
-Run this command from the directory in which you want to install your new Slim Framework application. You will require PHP 7.4 or newer.
+### Strony
+- **Strona główna** - karuzela z informacjami
+- **Galeria** - zdjęcia z lightbox
+- **Pracownicy** - lista kadry z danymi kontaktowymi
+- **Kontakt** - formularz z walidacją + mapa
+- **Plan zajęć** - dynamiczny plan z transpozycją widoku
+- **Szablony UI** - powiadomienia email, tabele
+
+### Dodatkowe
+- Architektura MVC (Controllers/Models/Views)
+- Walidacja formularzy po stronie serwera
+- POST/REDIRECT/GET pattern
+- Responsywny design
+- Globalne dane kontaktowe (config/data.php)
+- Paginacja z wyszukiwarką
+- Eksport CSV, drukowanie
+- Automatyczne wykrywanie aktualnej lekcji
+
+## Instalacja
 
 ```bash
-composer create-project slim/slim-skeleton [my-app-name]
+# Klonuj repozytorium
+git clone [url]
+
+# Zainstaluj zależności
+composer install
+
+# Konfiguracja
+cp .env.example .env
+# Edytuj .env (SMTP, dane aplikacji)
+
+# Uruchom
+php -S localhost:8000 -t public
 ```
 
-Replace `[my-app-name]` with the desired directory name for your new application. You'll want to:
+## Struktura
 
-* Point your virtual host document root to your new application's `public/` directory.
-* Ensure `logs/` is web writable.
-
-To run the application in development, you can run these commands 
-
-```bash
-cd [my-app-name]
-composer start
+```
+├── config/          # Routing, dane globalne
+├── public/          # Assets (CSS, JS, biblioteki)
+├── src/
+│   ├── Controllers/ # Logika biznesowa
+│   ├── Models/      # Modele danych
+│   └── Services/    # Serwisy (mail)
+├── templates/       # Szablony Twig
+│   ├── emails/      # Szablony emaili
+│   └── ui/          # Komponenty UI
+└── vendor/          # Zależności
 ```
 
-Or you can use `docker-compose` to run the app with `docker`, so you can run these commands:
-```bash
-cd [my-app-name]
-docker-compose up -d
-```
-After that, open `http://localhost:8080` in your browser.
+## Wymagania
 
-Run this command in the application directory to run the test suite
-
-```bash
-composer test
-```
-
-That's it! Now go build something cool.
+- PHP 8.2+
+- Composer
+- mod_rewrite (Apache) lub odpowiednia konfiguracja (Nginx)
+- SMTP (opcjonalnie, dla funkcji kontaktu)
