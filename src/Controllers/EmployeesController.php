@@ -12,10 +12,10 @@ class EmployeesController
     public function index(Request $request, Response $response): Response
     {
         $view = Twig::fromRequest($request);
-        
+
         $employeeModel = new Employee();
         $employees = $employeeModel->getAll();
-        
+
         return $view->render($response, 'employees.twig', [
             'page_title' => 'Pracownicy',
             'employees' => $employees

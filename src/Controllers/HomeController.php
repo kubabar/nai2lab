@@ -11,7 +11,7 @@ class HomeController
     public function index(Request $request, Response $response): Response
     {
         $view = Twig::fromRequest($request);
-        
+
         $slides = [
             [
                 'title' => 'Akademia im. Jakuba z Paradyża',
@@ -34,7 +34,7 @@ class HomeController
                 'image' => '/images/slide4.jpg'
             ]
         ];
-        
+
         return $view->render($response, 'home.twig', [
             'page_title' => 'Strona główna',
             'slides' => $slides

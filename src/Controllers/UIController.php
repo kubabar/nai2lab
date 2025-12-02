@@ -14,7 +14,7 @@ class UIController
     public function emailNotification(Request $request, Response $response): Response
     {
         $view = Twig::fromRequest($request);
-        
+
         // Przykładowe dane wydarzenia
         $eventData = [
             'event_name' => 'Konferencja Naukowa "Innowacje w Edukacji 2025"',
@@ -23,17 +23,17 @@ class UIController
             'first_name' => 'Jan',
             'last_name' => 'Kowalski'
         ];
-        
+
         return $view->render($response, 'emails/notification.twig', $eventData);
     }
-    
+
     /**
      * Wyświetl tabelę osób
      */
     public function peopleTable(Request $request, Response $response): Response
     {
         $view = Twig::fromRequest($request);
-        
+
         // Przykładowe dane osób - rozszerzona lista
         $people = [
             [
@@ -237,7 +237,7 @@ class UIController
                 'badge_text' => 'Adiunkt'
             ]
         ];
-        
+
         return $view->render($response, 'ui/people-table.twig', [
             'page_title' => 'Lista pracowników',
             'table_title' => 'Kadra naukowo-dydaktyczna',
@@ -245,14 +245,14 @@ class UIController
             'people' => $people
         ]);
     }
-    
+
     /**
      * Wyświetl przykłady wszystkich szablonów UI
      */
     public function index(Request $request, Response $response): Response
     {
         $view = Twig::fromRequest($request);
-        
+
         return $view->render($response, 'ui/index.twig', [
             'page_title' => 'Szablony UI'
         ]);

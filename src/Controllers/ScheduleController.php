@@ -14,7 +14,7 @@ class ScheduleController
     public function index(Request $request, Response $response): Response
     {
         $view = Twig::fromRequest($request);
-        
+
         // 1. Tablica godzin lekcyjnych
         $hours = [
             ['nr' => 1, 'start' => '7:50', 'end' => '8:35'],
@@ -27,7 +27,7 @@ class ScheduleController
             ['nr' => 8, 'start' => '14:00', 'end' => '14:45'],
             ['nr' => 9, 'start' => '14:50', 'end' => '15:35']
         ];
-        
+
         // 2. Tablica nagłówków dni
         $days = [
             ['id' => 'pn', 'full' => 'Poniedziałek', 'short' => 'PN'],
@@ -36,7 +36,7 @@ class ScheduleController
             ['id' => 'cz', 'full' => 'Czwartek', 'short' => 'CZ'],
             ['id' => 'pt', 'full' => 'Piątek', 'short' => 'PT']
         ];
-        
+
         // 3. Tablica zajęć
         $schedule = [
             'pn' => [
@@ -95,10 +95,10 @@ class ScheduleController
                 null
             ]
         ];
-        
+
         // Sprawdź aktualny dzień i godzinę
         $currentInfo = $this->getCurrentLessonInfo($hours, $days);
-        
+
         return $view->render($response, 'schedule.twig', [
             'page_title' => 'Plan zajęć',
             'hours' => $hours,
@@ -110,7 +110,7 @@ class ScheduleController
             'current_time' => $currentInfo['time']
         ]);
     }
-    
+
     /**
      * Sprawdź aktualny dzień i lekcję
      */
@@ -119,13 +119,13 @@ class ScheduleController
         $now = new \DateTime();
         $dayOfWeek = (int)$now->format('N'); // 1=pon, 5=pią
         $currentTime = $now->format('H:i');
-        
+
         // Mapuj dzień tygodnia na index (0=pon)
         $currentDayIndex = $dayOfWeek - 1;
         if ($currentDayIndex < 0 || $currentDayIndex > 4) {
             $currentDayIndex = -1; // Weekend
         }
-        
+
         // Znajdź aktualną lekcję
         $currentLessonIndex = -1;
         foreach ($hours as $index => $hour) {
@@ -134,13 +134,13 @@ class ScheduleController
                 break;
             }
         }
-        
+
         return [
             'day' => $currentDayIndex,
             'lesson' => $currentLessonIndex,
             'time' => $currentTime,
-            'day_name' => $currentDayIndex >= 0 && $currentDayIndex < 5 
-                ? $days[$currentDayIndex]['full'] 
+            'day_name' => $currentDayIndex >= 0 && $currentDayIndex < 5
+                ? $days[$currentDayIndex]['full']
                 : 'Weekend'
         ];
     }

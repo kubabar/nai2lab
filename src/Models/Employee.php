@@ -5,7 +5,7 @@ namespace App\Models;
 class Employee
 {
     private array $employees = [];
-    
+
     public function __construct()
     {
         // Przykładowe dane - w prawdziwej aplikacji pobierałbyś z bazy danych
@@ -92,14 +92,13 @@ class Employee
                 'photo' => ''
             ]
         ];
-
     }
-    
+
     public function getAll(): array
     {
         return $this->employees;
     }
-    
+
     public function getById(int $id): ?array
     {
         foreach ($this->employees as $employee) {
@@ -109,10 +108,10 @@ class Employee
         }
         return null;
     }
-    
+
     public function getByDepartment(string $department): array
     {
-        return array_filter($this->employees, function($employee) use ($department) {
+        return array_filter($this->employees, function ($employee) use ($department) {
             return $employee['department'] === $department;
         });
     }

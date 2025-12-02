@@ -11,7 +11,7 @@ class GalleryController
     public function index(Request $request, Response $response): Response
     {
         $view = Twig::fromRequest($request);
-        
+
         $photos = [
             [
                 'thumb' => 'https://lokeshdhakar.com/projects/lightbox2/images/thumb-1.jpg',
@@ -44,7 +44,7 @@ class GalleryController
                 'title' => 'Kampus'
             ]
         ];
-        
+
         return $view->render($response, 'gallery.twig', [
             'page_title' => 'Galeria zdjęć',
             'photos' => $photos

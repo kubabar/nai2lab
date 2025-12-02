@@ -13,26 +13,26 @@ class ContactController
     public function index(Request $request, Response $response): Response
     {
         $view = Twig::fromRequest($request);
-        
+
         // Sprawdź czy jest parametr success w URL
         $queryParams = $request->getQueryParams();
-        $success = isset($queryParams['success']) && $queryParams['success'] == '1' 
-            ? 'Wiadomość została wysłana pomyślnie!' 
+        $success = isset($queryParams['success']) && $queryParams['success'] == '1'
+            ? 'Wiadomość została wysłana pomyślnie!'
             : null;
-        
+
         return $view->render($response, 'contact.twig', [
             'page_title' => 'Kontakt',
             'success' => $success
         ]);
     }
-    
+
     public function send(Request $request, Response $response): Response
     {
         $data = $request->getParsedBody();
-        
+
         $contactForm = new ContactForm($data);
         $errors = $contactForm->validate();
-        
+
         if (empty($errors)) {
             $mailService = new MailService();
             $sent = $mailService->sendContactMessage(
@@ -41,7 +41,7 @@ class ContactController
                 $contactForm->getSubject(),
                 $contactForm->getMessage()
             );
-            
+
             if ($sent) {
                 // Przekierowanie po udanym wysłaniu (POST/REDIRECT/GET pattern)
                 // Parametr success zostanie obsłużony przez GET
@@ -52,7 +52,7 @@ class ContactController
                 $errors[] = 'Wystąpił błąd podczas wysyłania wiadomości.';
             }
         }
-        
+
         // Jeśli są błędy, renderuj formularz z błędami
         $view = Twig::fromRequest($request);
         return $view->render($response, 'contact.twig', [
