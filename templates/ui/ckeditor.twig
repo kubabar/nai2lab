@@ -1,0 +1,29 @@
+{% extends "layout.twig" %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/ckeditor5/style.css">
+<link rel="stylesheet" href="/ckeditor5/ckeditor5.css">
+{% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <button id="submit">Save to file</button>
+    <div class="editor-container editor-container_classic-editor editor-container_include-style" id="editor-container">
+        <div class="editor-container__editor">
+            <div id="editor"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="importmap">
+{
+    "imports": {
+        "ckeditor5": "/ckeditor5/ckeditor5.js",
+        "ckeditor5/": "/ckeditor5/"
+    }
+}
+</script>
+<script type="module" src="/ckeditor5/main.js"></script>
+{% endblock %}

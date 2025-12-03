@@ -27,3 +27,6 @@ $app->get('/ui/people-table', [UIController::class, 'peopleTable'])->setName('ui
 
 // Plan zajęć
 $app->get('/plan-zajec', [ScheduleController::class, 'index'])->setName('schedule');
+
+// CKEditor
+$app->get('/ckeditor', [UIController::class, 'ckeditor'])->setName('ui.ckeditor');
