@@ -2,296 +2,290 @@
 
 {% block stylesheets %}
 <style>
-.table-container {
-    margin: 2rem 0;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    overflow: hidden;
-}
+    .table-container {
+        margin: 2rem 0;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
 
-.table-header {
-    background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
-    color: white;
-    padding: 1.5rem 2rem;
-}
+    .table-header {
+        background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+        color: white;
+        padding: 1.5rem 2rem;
+    }
 
-.table-header h2 {
-    margin: 0;
-    font-size: 1.8rem;
-}
+    .table-header h2 {
+        margin: 0;
+        font-size: 1.8rem;
+    }
 
-.table-header p {
-    margin: 0.5rem 0 0 0;
-    opacity: 0.9;
-    font-size: 0.95rem;
-}
+    .table-header p {
+        margin: 0.5rem 0 0 0;
+        opacity: 0.9;
+        font-size: 0.95rem;
+    }
 
-.table-tools {
-    padding: 1rem 2rem;
-    background: #f8f9fa;
-    border-bottom: 1px solid #e0e0e0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
-
-.search-box {
-    flex: 1;
-    min-width: 250px;
-}
-
-.search-box input {
-    width: 100%;
-    padding: 0.6rem 1rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 0.95rem;
-}
-
-.search-box input:focus {
-    outline: none;
-    border-color: #3498db;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
-}
-
-.table-actions {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.btn {
-    padding: 0.6rem 1.2rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-.btn-primary {
-    background: #3498db;
-    color: white;
-}
-
-.btn-primary:hover {
-    background: #2980b9;
-}
-
-.btn-secondary {
-    background: #95a5a6;
-    color: white;
-}
-
-.btn-secondary:hover {
-    background: #7f8c8d;
-}
-
-.table-wrapper {
-    overflow-x: auto;
-    padding: 0;
-}
-
-.people-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.95rem;
-}
-
-.people-table thead {
-    background: #34495e;
-    color: white;
-}
-
-.people-table th {
-    padding: 1rem;
-    text-align: left;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 0.85rem;
-    letter-spacing: 0.5px;
-}
-
-.people-table th.center {
-    text-align: center;
-}
-
-.people-table tbody tr {
-    border-bottom: 1px solid #e0e0e0;
-    transition: background 0.2s ease;
-}
-
-.people-table tbody tr:hover {
-    background: #f8f9fa;
-}
-
-.people-table tbody tr:last-child {
-    border-bottom: none;
-}
-
-.people-table td {
-    padding: 1rem;
-    color: #2c3e50;
-}
-
-.people-table td.center {
-    text-align: center;
-    font-weight: 600;
-    color: #7f8c8d;
-}
-
-.people-table td.name {
-    font-weight: 600;
-    color: #2c3e50;
-}
-
-.people-table td.position {
-    color: #3498db;
-    font-weight: 500;
-}
-
-.people-table td.email a {
-    color: #3498db;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.people-table td.email a:hover {
-    color: #2980b9;
-    text-decoration: underline;
-}
-
-.badge {
-    display: inline-block;
-    padding: 0.25rem 0.75rem;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-.badge-rektor {
-    background: #e74c3c;
-    color: white;
-}
-
-.badge-prorektor {
-    background: #e67e22;
-    color: white;
-}
-
-.badge-kierownik {
-    background: #f39c12;
-    color: white;
-}
-
-.badge-wykladowca {
-    background: #3498db;
-    color: white;
-}
-
-.badge-adiunkt {
-    background: #9b59b6;
-    color: white;
-}
-
-.badge-asystent {
-    background: #95a5a6;
-    color: white;
-}
-
-.table-footer {
-    padding: 1rem 2rem;
-    background: #f8f9fa;
-    border-top: 1px solid #e0e0e0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.9rem;
-    color: #7f8c8d;
-}
-
-.records-info {
-    color: #2c3e50;
-}
-
-.records-info strong {
-    color: #3498db;
-}
-
-.pagination {
-    display: flex;
-    gap: 0.25rem;
-    align-items: center;
-}
-
-.pagination button {
-    padding: 0.5rem 0.75rem;
-    min-width: 40px;
-    border: 1px solid #ddd;
-    background: white;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: all 0.3s ease;
-    font-weight: 500;
-    color: #2c3e50;
-}
-
-.pagination button:hover:not(.active) {
-    background: #ecf0f1;
-    border-color: #bdc3c7;
-}
-
-.pagination button.active {
-    background: #3498db;
-    color: white;
-    border-color: #3498db;
-    font-weight: 600;
-}
-
-.pagination button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.pagination button:first-child,
-.pagination button:last-child {
-    font-weight: bold;
-    font-size: 1.2rem;
-}
-
-.no-data {
-    text-align: center;
-    padding: 3rem;
-    color: #95a5a6;
-    font-size: 1.1rem;
-}
-
-@media (max-width: 768px) {
     .table-tools {
-        flex-direction: column;
-    }
-    
-    .search-box {
-        width: 100%;
-    }
-    
-    .people-table {
-        font-size: 0.85rem;
-    }
-    
-    .people-table th,
-    .people-table td {
-        padding: 0.75rem 0.5rem;
-    }
-    
-    .table-footer {
-        flex-direction: column;
+        padding: 1rem 2rem;
+        background: #f8f9fa;
+        border-bottom: 1px solid #e0e0e0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
         gap: 1rem;
     }
-}
+
+    .search-box {
+        flex: 1;
+        min-width: 250px;
+    }
+
+    .search-box input {
+        width: 100%;
+        padding: 0.6rem 1rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 0.95rem;
+    }
+
+    .search-box input:focus {
+        outline: none;
+        border-color: #3498db;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    }
+
+    .table-actions {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .btn {
+        padding: 0.6rem 1.2rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+        background: #3498db;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background: #2980b9;
+    }
+
+    .btn-secondary {
+        background: #95a5a6;
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background: #7f8c8d;
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
+        padding: 0;
+    }
+
+    .people-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.95rem;
+    }
+
+    .people-table thead {
+        background: #34495e;
+        color: white;
+    }
+
+    .people-table th {
+        padding: 1rem;
+        text-align: left;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        letter-spacing: 0.5px;
+    }
+
+    .people-table th.center {
+        text-align: center;
+    }
+
+    .people-table tbody tr {
+        border-bottom: 1px solid #e0e0e0;
+        transition: background 0.2s ease;
+    }
+
+    .people-table tbody tr:hover {
+        background: #f8f9fa;
+    }
+
+    .people-table tbody tr:last-child {
+        border-bottom: none;
+    }
+
+    .people-table td {
+        padding: 1rem;
+        color: #2c3e50;
+    }
+
+    .people-table td.center {
+        text-align: center;
+        font-weight: 600;
+        color: #7f8c8d;
+    }
+
+    .people-table td.name {
+        font-weight: 600;
+        color: #2c3e50;
+    }
+
+    .people-table td.position {
+        color: #3498db;
+        font-weight: 500;
+    }
+
+    .people-table td.email a {
+        color: #3498db;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .people-table td.email a:hover {
+        color: #2980b9;
+        text-decoration: underline;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .badge-rektor {
+        background: #e74c3c;
+        color: white;
+    }
+
+    .badge-prorektor {
+        background: #e67e22;
+        color: white;
+    }
+
+    .badge-kierownik {
+        background: #f39c12;
+        color: white;
+    }
+
+    .badge-wykladowca {
+        background: #3498db;
+        color: white;
+    }
+
+    .badge-adiunkt {
+        background: #9b59b6;
+        color: white;
+    }
+
+    .badge-asystent {
+        background: #95a5a6;
+        color: white;
+    }
+
+    .table-footer {
+        padding: 1rem 2rem;
+        background: #f8f9fa;
+        border-top: 1px solid #e0e0e0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.9rem;
+        color: #7f8c8d;
+    }
+
+    .records-info {
+        color: #2c3e50;
+    }
+
+    .records-info strong {
+        color: #3498db;
+    }
+
+    .pagination {
+        display: flex;
+        gap: 0.25rem;
+        align-items: center;
+    }
+
+    .pagination button {
+        padding: 0.5rem 0.75rem;
+        min-width: 40px;
+        border: 1px solid #ddd;
+        background: white;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        color: #2c3e50;
+    }
+
+    .pagination button:hover:not(.active) {
+        background: #ecf0f1;
+        border-color: #bdc3c7;
+    }
+
+    .pagination button.active {
+        background: #3498db;
+        color: white;
+        border-color: #3498db;
+        font-weight: 600;
+    }
+
+    .pagination button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .no-data {
+        text-align: center;
+        padding: 3rem;
+        color: #95a5a6;
+        font-size: 1.1rem;
+    }
+
+    @media (max-width: 768px) {
+        .table-tools {
+            flex-direction: column;
+        }
+
+        .search-box {
+            width: 100%;
+        }
+
+        .people-table {
+            font-size: 0.85rem;
+        }
+
+        .people-table th,
+        .people-table td {
+            padding: 0.75rem 0.5rem;
+        }
+
+        .table-footer {
+            flex-direction: column;
+            gap: 1rem;
+        }
+    }
 </style>
 {% endblock %}
 
@@ -301,7 +295,7 @@
         <h2>{{ table_title }}</h2>
         <p>{{ table_description }}</p>
     </div>
-    
+
     <div class="table-tools">
         <div class="search-box">
             <input type="text" id="searchInput" placeholder="Szukaj po nazwisku, imieniu, stanowisku lub email...">
@@ -311,7 +305,7 @@
             <button class="btn btn-secondary" onclick="printTable()">🖨️ Drukuj</button>
         </div>
     </div>
-    
+
     <div class="table-wrapper">
         {% if people|length > 0 %}
         <table class="people-table" id="peopleTable">
@@ -349,11 +343,11 @@
         </div>
         {% endif %}
     </div>
-    
+
     <div class="table-footer">
         <div class="records-info">
-            Wyświetlono <strong><span id="visibleCount">{{ people|length }}</span></strong> 
-            z <strong><span id="totalCount">{{ people|length }}</span></strong> 
+            Wyświetlono <strong><span id="visibleCount">{{ people|length }}</span></strong>
+            z <strong><span id="totalCount">{{ people|length }}</span></strong>
             {% if people|length == 1 %}osoby{% elseif people|length < 5 %}osób{% else %}osób{% endif %}
         </div>
         <div class="pagination" id="pagination">
@@ -365,200 +359,217 @@
 
 {% block scripts %}
 <script>
-// Konfiguracja paginacji
-const ITEMS_PER_PAGE = 10;
-let currentPage = 1;
-let allRows = [];
-let filteredRows = [];
+    // Konfiguracja paginacji
+    const ITEMS_PER_PAGE = 10;
+    let currentPage = 1;
+    let allRows = [];
+    let filteredRows = [];
 
-// Inicjalizacja przy załadowaniu strony
-document.addEventListener('DOMContentLoaded', function() {
-    allRows = Array.from(document.querySelectorAll('#peopleTable tbody tr'));
-    filteredRows = [...allRows];
-    updatePagination();
-    showPage(1);
-});
-
-// Wyszukiwarka w tabeli
-document.getElementById('searchInput').addEventListener('keyup', function() {
-    const searchValue = this.value.toLowerCase();
-    
-    // Filtruj wiersze
-    filteredRows = allRows.filter(row => {
-        const text = row.textContent.toLowerCase();
-        const matches = text.includes(searchValue);
-        row.style.display = matches ? '' : 'none';
-        return matches;
+    // Inicjalizacja przy załadowaniu strony
+    document.addEventListener('DOMContentLoaded', function () {
+        allRows = Array.from(document.querySelectorAll('#peopleTable tbody tr'));
+        filteredRows = [...allRows];
+        updatePagination();
+        showPage(1);
     });
-    
-    // Reset do pierwszej strony po wyszukiwaniu
-    currentPage = 1;
-    updatePagination();
-    showPage(1);
-});
 
-// Funkcja wyświetlania konkretnej strony
-function showPage(page) {
-    currentPage = page;
-    
-    const startIndex = (page - 1) * ITEMS_PER_PAGE;
-    const endIndex = startIndex + ITEMS_PER_PAGE;
-    
-    // Ukryj wszystkie wiersze
-    allRows.forEach(row => row.style.display = 'none');
-    
-    // Pokaż tylko wiersze dla bieżącej strony z przefiltrowanych
-    filteredRows.forEach((row, index) => {
-        if (index >= startIndex && index < endIndex) {
-            row.style.display = '';
-        } else {
-            row.style.display = 'none';
-        }
-    });
-    
-    // Aktualizuj przycisk aktywnej strony
-    document.querySelectorAll('.pagination button').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    const activeBtn = document.querySelector(`.pagination button[data-page="${page}"]`);
-    if (activeBtn) {
-        activeBtn.classList.add('active');
-    }
-    
-    // Aktualizuj licznik
-    updateCounter();
-}
+    // Wyszukiwarka w tabeli
+    document.getElementById('searchInput').addEventListener('keyup', function () {
+        const searchValue = this.value.toLowerCase();
 
-// Aktualizacja licznika rekordów
-function updateCounter() {
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE + 1;
-    const endIndex = Math.min(currentPage * ITEMS_PER_PAGE, filteredRows.length);
-    
-    document.getElementById('visibleCount').textContent = 
-        filteredRows.length > 0 ? `${startIndex}-${endIndex}` : '0';
-    document.getElementById('totalCount').textContent = filteredRows.length;
-}
-
-// Aktualizacja przycisków paginacji
-function updatePagination() {
-    const totalPages = Math.ceil(filteredRows.length / ITEMS_PER_PAGE);
-    const paginationContainer = document.getElementById('pagination');
-    paginationContainer.innerHTML = '';
-    
-    if (totalPages <= 1) {
-        return; // Nie pokazuj paginacji jeśli jest tylko 1 strona
-    }
-    
-    // Przycisk "Poprzednia"
-    if (currentPage > 1) {
-        const prevBtn = createPageButton('‹', currentPage - 1);
-        prevBtn.title = 'Poprzednia strona';
-        paginationContainer.appendChild(prevBtn);
-    }
-    
-    // Logika wyświetlania numerów stron
-    const maxVisiblePages = 5;
-    let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
-    let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-    
-    // Dostosuj startPage jeśli jesteśmy blisko końca
-    if (endPage - startPage < maxVisiblePages - 1) {
-        startPage = Math.max(1, endPage - maxVisiblePages + 1);
-    }
-    
-    // Przycisk pierwszej strony + "..."
-    if (startPage > 1) {
-        paginationContainer.appendChild(createPageButton('1', 1));
-        if (startPage > 2) {
-            const dots = document.createElement('span');
-            dots.textContent = '...';
-            dots.style.padding = '0.5rem';
-            dots.style.color = '#95a5a6';
-            paginationContainer.appendChild(dots);
-        }
-    }
-    
-    // Przyciski stron
-    for (let i = startPage; i <= endPage; i++) {
-        const pageBtn = createPageButton(i.toString(), i);
-        if (i === currentPage) {
-            pageBtn.classList.add('active');
-        }
-        paginationContainer.appendChild(pageBtn);
-    }
-    
-    // "..." + przycisk ostatniej strony
-    if (endPage < totalPages) {
-        if (endPage < totalPages - 1) {
-            const dots = document.createElement('span');
-            dots.textContent = '...';
-            dots.style.padding = '0.5rem';
-            dots.style.color = '#95a5a6';
-            paginationContainer.appendChild(dots);
-        }
-        paginationContainer.appendChild(createPageButton(totalPages.toString(), totalPages));
-    }
-    
-    // Przycisk "Następna"
-    if (currentPage < totalPages) {
-        const nextBtn = createPageButton('›', currentPage + 1);
-        nextBtn.title = 'Następna strona';
-        paginationContainer.appendChild(nextBtn);
-    }
-    
-    updateCounter();
-}
-
-// Funkcja tworząca przycisk strony
-function createPageButton(text, page) {
-    const button = document.createElement('button');
-    button.textContent = text;
-    button.setAttribute('data-page', page);
-    button.addEventListener('click', () => showPage(page));
-    return button;
-}
-
-// Eksport do CSV
-function exportToCSV() {
-    const table = document.getElementById('peopleTable');
-    let csv = [];
-    
-    // Nagłówki
-    const headers = Array.from(table.querySelectorAll('thead th')).map(th => th.textContent);
-    csv.push(headers.join(','));
-    
-    // Tylko widoczne (przefiltrowane) wiersze
-    filteredRows.forEach(row => {
-        const cols = Array.from(row.querySelectorAll('td')).map(td => {
-            let text = td.textContent.trim();
-            // Usuń dodatkowe białe znaki
-            text = text.replace(/\s+/g, ' ');
-            return '"' + text.replace(/"/g, '""') + '"';
+        // Filtruj wiersze
+        filteredRows = allRows.filter(row => {
+            const text = row.textContent.toLowerCase();
+            const matches = text.includes(searchValue);
+            row.style.display = matches ? '' : 'none';
+            return matches;
         });
-        csv.push(cols.join(','));
+
+        // Reset do pierwszej strony po wyszukiwaniu
+        currentPage = 1;
+        updatePagination();
+        showPage(1);
     });
-    
-    // Pobierz plik
-    const csvContent = '\uFEFF' + csv.join('\n'); // \uFEFF = BOM dla UTF-8
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'lista_osob_' + new Date().toISOString().split('T')[0] + '.csv';
-    link.click();
-    
-    if (window.AJP && window.AJP.showToast) {
-        window.AJP.showToast(`Wyeksportowano ${filteredRows.length} rekordów do CSV`, 'success');
+
+    // Funkcja wyświetlania konkretnej strony
+    function showPage(page) {
+        currentPage = page;
+
+        const startIndex = (page - 1) * ITEMS_PER_PAGE;
+        const endIndex = startIndex + ITEMS_PER_PAGE;
+
+        // Ukryj wszystkie wiersze
+        allRows.forEach(row => row.style.display = 'none');
+
+        // Pokaż tylko wiersze dla bieżącej strony z przefiltrowanych
+        filteredRows.forEach((row, index) => {
+            if (index >= startIndex && index < endIndex) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+
+        // Aktualizuj przycisk aktywnej strony
+        document.querySelectorAll('.pagination button').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        const activeBtn = document.querySelector(`.pagination button[data-page="${page}"]`);
+        if (activeBtn) {
+            activeBtn.classList.add('active');
+        }
+
+        // Aktualizuj licznik
+        updateCounter();
     }
-}
 
-// Drukowanie
-function printTable() {
-    window.print();
-}
+    // Aktualizacja licznika rekordów
+    function updateCounter() {
+        const startIndex = (currentPage - 1) * ITEMS_PER_PAGE + 1;
+        const endIndex = Math.min(currentPage * ITEMS_PER_PAGE, filteredRows.length);
 
-// Style dla wydruku
-const style = document.createElement('style');
-style.textContent = `
+        document.getElementById('visibleCount').textContent =
+            filteredRows.length > 0 ? `${startIndex}-${endIndex}` : '0';
+        document.getElementById('totalCount').textContent = filteredRows.length;
+    }
+
+    // Aktualizacja przycisków paginacji
+    function updatePagination() {
+        const totalPages = Math.ceil(filteredRows.length / ITEMS_PER_PAGE);
+        const paginationContainer = document.getElementById('pagination');
+        paginationContainer.innerHTML = '';
+
+        if (totalPages <= 1) {
+            return; // Nie pokazuj paginacji jeśli jest tylko 1 strona
+        }
+
+        // Przycisk "Poprzednia"
+        if (currentPage > 1) {
+            const prevBtn = createNavigationButton('‹', 'prev');
+            prevBtn.title = 'Poprzednia strona';
+            paginationContainer.appendChild(prevBtn);
+        }
+
+        // Logika wyświetlania numerów stron
+        const maxVisiblePages = 5;
+        let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+        let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+        // Dostosuj startPage jeśli jesteśmy blisko końca
+        if (endPage - startPage < maxVisiblePages - 1) {
+            startPage = Math.max(1, endPage - maxVisiblePages + 1);
+        }
+
+        // Przycisk pierwszej strony + "..."
+        if (startPage > 1) {
+            paginationContainer.appendChild(createPageButton('1', 1));
+            if (startPage > 2) {
+                const dots = document.createElement('span');
+                dots.textContent = '...';
+                dots.style.padding = '0.5rem';
+                dots.style.color = '#95a5a6';
+                paginationContainer.appendChild(dots);
+            }
+        }
+
+        // Przyciski stron
+        for (let i = startPage; i <= endPage; i++) {
+            const pageBtn = createPageButton(i.toString(), i);
+            if (i === currentPage) {
+                pageBtn.classList.add('active');
+            }
+            paginationContainer.appendChild(pageBtn);
+        }
+
+        // "..." + przycisk ostatniej strony
+        if (endPage < totalPages) {
+            if (endPage < totalPages - 1) {
+                const dots = document.createElement('span');
+                dots.textContent = '...';
+                dots.style.padding = '0.5rem';
+                dots.style.color = '#95a5a6';
+                paginationContainer.appendChild(dots);
+            }
+            paginationContainer.appendChild(createPageButton(totalPages.toString(), totalPages));
+        }
+
+        // Przycisk "Następna"
+        if (currentPage < totalPages) {
+            const nextBtn = createNavigationButton('›', 'next');
+            nextBtn.title = 'Następna strona';
+            paginationContainer.appendChild(nextBtn);
+        }
+
+        updateCounter();
+    }
+
+    // Funkcja tworząca przycisk nawigacyjny (strzałki)
+    function createNavigationButton(text, direction) {
+        const button = document.createElement('button');
+        button.textContent = text;
+        button.addEventListener('click', () => {
+            if (direction === 'prev' && currentPage > 1) {
+                showPage(currentPage - 1);
+            } else if (direction === 'next') {
+                const totalPages = Math.ceil(filteredRows.length / ITEMS_PER_PAGE);
+                if (currentPage < totalPages) {
+                    showPage(currentPage + 1);
+                }
+            }
+        });
+        return button;
+    }
+
+    // Funkcja tworząca przycisk strony
+    function createPageButton(text, page) {
+        const button = document.createElement('button');
+        button.textContent = text;
+        button.setAttribute('data-page', page);
+        button.addEventListener('click', () => showPage(page));
+        return button;
+    }
+
+    // Eksport do CSV
+    function exportToCSV() {
+        const table = document.getElementById('peopleTable');
+        let csv = [];
+
+        // Nagłówki
+        const headers = Array.from(table.querySelectorAll('thead th')).map(th => th.textContent);
+        csv.push(headers.join(','));
+
+        // Tylko widoczne (przefiltrowane) wiersze
+        filteredRows.forEach(row => {
+            const cols = Array.from(row.querySelectorAll('td')).map(td => {
+                let text = td.textContent.trim();
+                // Usuń dodatkowe białe znaki
+                text = text.replace(/\s+/g, ' ');
+                return '"' + text.replace(/"/g, '""') + '"';
+            });
+            csv.push(cols.join(','));
+        });
+
+        // Pobierz plik
+        const csvContent = '\uFEFF' + csv.join('\n'); // \uFEFF = BOM dla UTF-8
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'lista_osob_' + new Date().toISOString().split('T')[0] + '.csv';
+        link.click();
+
+        if (window.AJP && window.AJP.showToast) {
+            window.AJP.showToast(`Wyeksportowano ${filteredRows.length} rekordów do CSV`, 'success');
+        }
+    }
+
+    // Drukowanie
+    function printTable() {
+        window.print();
+    }
+
+    // Style dla wydruku
+    const style = document.createElement('style');
+    style.textContent = `
     @media print {
         body * {
             visibility: hidden;
@@ -584,6 +595,6 @@ style.textContent = `
         }
     }
 `;
-document.head.appendChild(style);
+    document.head.appendChild(style);
 </script>
 {% endblock %}
