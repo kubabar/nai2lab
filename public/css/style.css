@@ -13,7 +13,7 @@ body {
 }
 
 .swiper-slide h3 {
-    color:#3498db;
+    color: #3498db;
 }
 
 .container {
@@ -26,7 +26,7 @@ body {
 header {
     background: #2c3e50;
     color: white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     position: sticky;
     top: 0;
     z-index: 10000;
@@ -51,6 +51,36 @@ header {
     text-decoration: none;
 }
 
+/* Hide the checkbox */
+.menu-toggle {
+    display: none;
+}
+
+/* Hamburger icon - hidden by default */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 10001;
+}
+
+.hamburger span {
+    width: 100%;
+    height: 4px;
+    background: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    transform-origin: center;
+    display: block;
+}
+
+/* Navigation menu */
 .nav-menu {
     display: flex;
     list-style: none;
@@ -98,22 +128,20 @@ footer p {
     margin: 0.5rem 0;
 }
 
-@media (max-width: 768px) {
-    .navbar .container {
-        flex-direction: column;
-        gap: 1rem;
-    }
-    
-    .nav-menu {
-        flex-direction: column;
-        gap: 0.5rem;
-        width: 100%;
-        text-align: center;
-    }
-    
-    .page-title {
-        font-size: 2rem;
-    }
+.social-links {
+    margin-top: 1rem;
+}
+
+.social-links a {
+    margin: 0 0.5rem;
+    color: white;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.social-links a:hover {
+    opacity: 0.8;
+    text-decoration: underline;
 }
 
 /* Dodatkowe style dla list */
@@ -132,4 +160,106 @@ p {
 h3 {
     color: #2c3e50;
     margin: 1.5rem 0 1rem;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+
+    /* Show hamburger button */
+    .hamburger {
+        display: flex;
+    }
+
+    /* Hamburger animation when menu is open */
+    .menu-toggle:checked~.hamburger span:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+    }
+
+    .menu-toggle:checked~.hamburger span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-toggle:checked~.hamburger span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    /* Mobile menu */
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 80%;
+        max-width: 400px;
+        background: #2c3e50;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        padding: 2rem;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Show menu when checkbox is checked */
+    .menu-toggle:checked~.nav-menu {
+        transform: translateX(0);
+    }
+
+    /* Dark overlay */
+    .nav-menu::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: -1;
+    }
+
+    .menu-toggle:checked~.nav-menu::before {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Menu items styling */
+    .nav-menu li {
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-menu a {
+        display: block;
+        font-size: 1.5rem;
+        padding: 1rem;
+        width: 100%;
+    }
+
+    /* Close menu when a link is clicked */
+    .nav-menu a:focus,
+    .nav-menu a:active {
+        outline: 2px solid #3498db;
+    }
+
+    /* Page title smaller on mobile */
+    .page-title {
+        font-size: 2rem;
+    }
+}
+
+/* Tablet adjustments */
+@media (max-width: 1024px) and (min-width: 769px) {
+    .nav-menu {
+        gap: 1rem;
+    }
+
+    .nav-menu a {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.95rem;
+    }
 }

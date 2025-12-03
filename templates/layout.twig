@@ -5,7 +5,6 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{{ page_title }} - {{ contact.short_name }}</title>
-
         <link rel="stylesheet" href="/css/style.css">
 
         {% block stylesheets %}{% endblock %}
@@ -18,6 +17,18 @@
                     <a href="/" class="logo">
                         <h1>{{ contact.short_name }}</h1>
                     </a>
+
+                    <!-- Hidden checkbox for menu toggle -->
+                    <input type="checkbox" id="menu-toggle" class="menu-toggle">
+
+                    <!-- Hamburger icon -->
+                    <label for="menu-toggle" class="hamburger" aria-label="Toggle menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </label>
+
+                    <!-- Navigation menu -->
                     <ul class="nav-menu">
                         <li><a href="/" class="{% if page_title == 'Strona główna' %}active{% endif %}">Strona
                                 główna</a></li>
@@ -50,15 +61,15 @@
                 <p>{{ contact.street }}, {{ contact.postal_code }} {{ contact.city }} | Tel: {{ contact.phone }}</p>
 
                 {% if social %}
-                <div class="social-links" style="margin-top: 1rem;">
-                    {% if social.facebook %}<a href="{{ social.facebook }}" target="_blank" rel="noopener"
-                        style="margin: 0 0.5rem; color: white;">Facebook</a>{% endif %}
-                    {% if social.instagram %}<a href="{{ social.instagram }}" target="_blank" rel="noopener"
-                        style="margin: 0 0.5rem; color: white;">Instagram</a>{% endif %}
-                    {% if social.youtube %}<a href="{{ social.youtube }}" target="_blank" rel="noopener"
-                        style="margin: 0 0.5rem; color: white;">YouTube</a>{% endif %}
-                    {% if social.linkedin %}<a href="{{ social.linkedin }}" target="_blank" rel="noopener"
-                        style="margin: 0 0.5rem; color: white;">LinkedIn</a>{% endif %}
+                <div class="social-links">
+                    {% if social.facebook %}<a href="{{ social.facebook }}" target="_blank"
+                        rel="noopener">Facebook</a>{% endif %}
+                    {% if social.instagram %}<a href="{{ social.instagram }}" target="_blank"
+                        rel="noopener">Instagram</a>{% endif %}
+                    {% if social.youtube %}<a href="{{ social.youtube }}" target="_blank"
+                        rel="noopener">YouTube</a>{% endif %}
+                    {% if social.linkedin %}<a href="{{ social.linkedin }}" target="_blank"
+                        rel="noopener">LinkedIn</a>{% endif %}
                 </div>
                 {% endif %}
             </div>
